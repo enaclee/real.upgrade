@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d14">
+  <title>ENACLEE UPGRADE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">E</span><span>ENACLEE <b>UPGRADE</b></span></a>
+    <div class="top-actions">
+      <span class="local-tag"><i></i> ЛОКАЛЬНОЕ СОХРАНЕНИЕ</span>
+      <div class="balance"><span>БАЛАНС</span><strong id="balance">100 000</strong><small>CR</small></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">ТВОИ ВЕЩИ. ТВОИ ПРАВИЛА.</p>
+        <h1>UPGRADE<span>.</span></h1>
+        <p class="hero-sub">Загружай реальные предметы и пробуй улучшить их до чего-то дороже.</p>
+      </div>
+      <div class="hero-chip"><span class="pulse"></span> DEMO BUILD 0.1</div>
+    </section>
+
+    <nav class="tabs" aria-label="Разделы">
+      <button class="tab active" data-tab="upgrade">Апгрейд</button>
+      <button class="tab" data-tab="inventory">Инвентарь <span id="item-count" class="count">0</span></button>
+      <button class="tab" data-tab="history">История</button>
+    </nav>
+
+    <section id="upgrade-view" class="view">
+      <div class="upgrade-grid">
+        <article class="panel item-panel">
+          <div class="panel-heading"><div><span class="step">01</span><h2>ТВОЙ ПРЕДМЕТ</h2></div><button class="text-btn" id="choose-source">Выбрать из инвентаря ↗</button></div>
+          <div class="item-stage" id="source-stage">
+            <div class="empty-item"><div class="empty-icon">＋</div><b>Выбери предмет</b><span>или загрузи фотографию ниже</span></div>
+          </div>
+          <div class="item-meta"><div><span class="muted">НАЗВАНИЕ</span><strong id="source-name">Не выбран</strong></div><div class="value"><span class="muted">СТОИМОСТЬ</span><strong id="source-value">—</strong></div></div>
+          <button class="secondary-btn full" id="upload-btn">＋ Загрузить фотографию</button>
+          <input id="photo-input" type="file" accept="image/*" hidden>
+        </article>
+
+        <div class="middle">
+          <div class="upgrade-symbol">⇄</div>
+          <div class="chance-ring" id="chance-ring"><span id="chance">0%</span><small>ШАНС</small></div>
+          <div class="chance-note">Шанс зависит от стоимости предметов</div>
+          <button class="spin-btn" id="spin-btn" disabled><span>КРУТИТЬ</span><span>↗</span></button>
+          <div id="spin-status" class="spin-status">Выбери два предмета</div>
+        </div>
+
+        <article class="panel item-panel target-panel">
+          <div class="panel-heading"><div><span class="step">02</span><h2>ЦЕЛЬ АПГРЕЙДА</h2></div><button class="text-btn" id="random-target">Случайная цель ↻</button></div>
+          <div class="item-stage target-stage" id="target-stage">
+            <div class="empty-item"><div class="empty-icon">◇</div><b>Выбери цель</b><span>из каталога предметов</span></div>
+          </div>
+          <div class="item-meta"><div><span class="muted">НАЗВАНИЕ</span><strong id="target-name">Не выбран</strong></div><div class="value"><span class="muted">СТОИМОСТЬ</span><strong id="target-value">—</strong></div></div>
+          <button class="secondary-btn full" id="choose-target">Выбрать цель</button>
+        </article>
+      </div>
+      <div class="below-grid">
+        <div class="info-card"><span class="info-icon">ⓘ</span><div><b>Как это работает</b><p>При успехе исходный предмет заменяется целью. При неудаче исходный предмет теряется. Игра использует виртуальные кредиты без реальных денежных ставок.</p></div></div>
+        <div class="quick-stats"><div><span>ПРЕДМЕТОВ</span><b id="stat-items">0</b></div><div><span>АПГРЕЙДОВ</span><b id="stat-upgrades">0</b></div><div><span>УСПЕШНЫХ</span><b id="stat-wins">0</b></div></div>
+      </div>
+    </section>
+
+    <section id="inventory-view" class="view hidden">
+      <div class="section-title"><div><p class="eyebrow">ТВОЯ КОЛЛЕКЦИЯ</p><h2>Инвентарь</h2></div><button class="primary-small" id="inventory-upload">＋ Добавить предмет</button></div>
+      <div class="inventory-tools"><input id="inventory-search" placeholder="Поиск предметов…" type="search"><select id="sort-items"><option value="newest">Сначала новые</option><option value="low">Сначала дешевле</option><option value="high">Сначала дороже</option><option value="az">По названию</option></select></div>
+      <div id="inventory-grid" class="inventory-grid"></div>
+    </section>
+
+    <section id="history-view" class="view hidden">
+      <div class="section-title"><div><p class="eyebrow">ПОСЛЕДНИЕ РЕЗУЛЬТАТЫ</p><h2>История апгрейдов</h2></div><button class="text-btn" id="clear-history">Очистить историю</button></div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+
+    <footer><span>ENACLEE UPGRADE</span><span>Прототип · Всё хранится локально в этом браузере</span><button id="reset-demo" class="text-btn danger">Сбросить демо</button></footer>
+  </main>
+
+  <div class="modal-backdrop hidden" id="modal">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head"><div><p class="eyebrow">КОЛЛЕКЦИЯ</p><h2 id="modal-title">Выбери предмет</h2></div><button class="close-btn" id="close-modal" aria-label="Закрыть">×</button></div>
+      <div id="modal-content"></div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
